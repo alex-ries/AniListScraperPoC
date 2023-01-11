@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +18,13 @@ namespace AniListScraperConsole
         private string _apiKey;
         private string _apiCode;
         private string _tokenStorageFile;
+        private readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        
 
         public AnilistScraper()
         {
-            _clientId = "";
-            _clientSecret = "";
+            _clientId = "10578";
+            _clientSecret = "eUpBvlxGrhArHEwhGtsZ6UVl9M8ofwHvUL70h39y";
             _authUrl = new Uri("https://anilist.co/api/v2/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code");
             _tokenUrl = new Uri("https://anilist.co/api/v2/oauth/token");
             _apiUrl = new Uri("https://graphql.anilist.co");
@@ -30,10 +33,7 @@ namespace AniListScraperConsole
             _tokenStorageFile = ".store";
         }
 
-        public async Task<bool> LazyInitializer ()
-        {
-            return true;
-        }
+        
         /*
          * Proposed Query for Search:
          * 
@@ -55,5 +55,10 @@ namespace AniListScraperConsole
          *   }
          * }
          */
+    }
+
+    internal class TokenData {
+        public string Code { get; set; }
+        public string Token { get; set; }
     }
 }
